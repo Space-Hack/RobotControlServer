@@ -3,19 +3,6 @@ from openai import OpenAI
 from my_types import AIInput
 import json
 
-SYSTEM_PROMPT = """
-You're a helpful assistant and you're job is to maneuver a mars rover. 
-You are provided a json object that encodes all the current stystem states 
-and a task objective to complete and find the best next action the robot should take. 
-As a response return ONLY a JSON object with the following fields: 
-{'action': 'FORWARD' |  'BACKWARD' | 'TURN' | 'GRABBER_HEIGHT' | 'GRABBER_WIDTH', 'param': float}"
-where param is different for each action:
-- FORWARD: the distance to move forward in centimeters
-- BACKWARD: the distance to move backward in centimeters
-- TURN: the angle to turn in degrees from -180 to 180
-- GRABBER_HIGHT: the height of the grabber in centimeters
-- GRABBER_WIDTH: the width of the grabber in centimeters
-"""
 
 
 async def send_data_to_openai(system_prompt: str, ai_data: AIInput) -> str:
@@ -24,9 +11,13 @@ async def send_data_to_openai(system_prompt: str, ai_data: AIInput) -> str:
         api_key=os.environ.get("OPENAI_API_KEY"),
     )
 
+    print(f"Sending data to OpenAI: {system_prompt}")
+    print(f"AI Data: {ai_data}")
+
+
     try:
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
                 {
                     "role": "system",
