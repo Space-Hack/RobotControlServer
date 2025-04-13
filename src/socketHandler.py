@@ -6,28 +6,49 @@ from typing import Dict
 from websockets.legacy.server import WebSocketServerProtocol
 
 
-connected_clients: Dict[WebSocketServerProtocol, str] = {}
 
 
-def get_client_id(websocket: WebSocketServerProtocol) -> str:
-    return connected_clients.get(websocket, "Unknown")
+class Robot:
+    def __init__(self, websocket: WebSocketServerProtocol):
+        self.websocket = websocket
+
+        self.system_prompt = None
+    
+    def attach_task(self, name: str, task_objective: str):
+        self.name = name
+        self.system_prompt = f"""
+You're a helpful assistant and you're job is to maneuver a mars rover. 
+The task of the robot is to {task_objective}.
+You are provided a json object that encodes all the current stystem states 
+and a task objective to complete and find the best next action the robot should take. 
+As a response return ONLY a JSON object with the following fields: 
+{{ 'action': 'FORWARD' |  'BACKWARD' | 'TURN' | 'GRABBER_HEIGHT' | 'GRABBER_WIDTH', 'param': float }}
+where param is different for each action:
+- FORWARD: the distance to move forward in centimeters
+- BACKWARD: the distance to move backward in centimeters
+- TURN: the angle to turn in degrees from -180 to 180
+- GRABBER_HIGHT: the height of the grabber in centimeters
+- GRABBER_WIDTH: the width of the grabber in centimeters
+"""
+    
+    def get_name(self) -> str:
+        return self.name
+    
+    def get_system_prompt(self) -> str:
+        return self.system_prompt
+    
+    def get_websocket(self) -> WebSocketServerProtocol:
+        return self.websocket
+
+
+robots: [Robot] = []
 
 
 async def register(websocket):
-    addr = websocket.remote_address
-    connected_clients[websocket] = f"{addr[0]}:{addr[1]}"
-    print(f"[+] {connected_clients[websocket]} connected")
+    robots.append(Robot(websocket))
 
 
 async def unregister(websocket):
-    name = connected_clients.get(websocket, "Unknown")
-    connected_clients.pop(websocket, None)
-    print(f"[-] {name} disconnected")
+    robots.remove(next((robot for robot in robots if robot.get_websocket() == websocket), None))
 
 
-async def notify_all(message):
-    if connected_clients:
-        await asyncio.gather(
-            *[ws.send(message) for ws in connected_clients],
-            return_exceptions=True  # Prevent one broken client from crashing all
-        )

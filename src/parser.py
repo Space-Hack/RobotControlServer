@@ -37,7 +37,7 @@ def grabber_height_to_arm_angle(grabber_height: float) -> float:
     return (grabber_height / 50) * 180
 
 
-def parse_vex_data_string_to_ai_input(vex_data_string: str, client_id: str) -> AIInput:
+def parse_vex_data_string_to_ai_input(vex_data_string: str) -> AIInput:
     vexData: VEXData = input_to_object(vex_data_string)
 
     ai_input = AIInput(

@@ -1,16 +1,15 @@
 import json
 import asyncio
 import websockets
-from socketHandler import register, unregister, get_client_id
+from socketHandler import register, unregister, robots
 from parser import parse_vex_data_string_to_ai_input
 from my_types import VEXData, AIInput, ControlData
 from ai import send_data_to_openai
 from websockets.legacy.server import WebSocketServerProtocol
 
 
-async def handle_message(websocket: WebSocketServerProtocol, message: str, sender: str):
-    ai_input: AIInput = parse_vex_data_string_to_ai_input(
-        message, sender)
+async def handle_message(websocket: WebSocketServerProtocol, message: str):
+    ai_input: AIInput = parse_vex_data_string_to_ai_input(message)
 
     ai_response: ControlData = await send_data_to_openai(ai_input)
 
@@ -25,23 +24,11 @@ async def handle_message(websocket: WebSocketServerProtocol, message: str, sende
         print(f"Error decoding JSON: {ai_response}")
 
 
-def handle_task_result(task):
-    try:
-        task.result()  # will raise the exception if there was one
-    except Exception as e:
-        print("Caught exception:", e)
-
-
 async def handle_client(websocket: WebSocketServerProtocol):
     await register(websocket)
     try:
         async for message in websocket:
-            sender = get_client_id(websocket)
-            print(f"[{sender}] {message}")
-            task = asyncio.create_task(
-                handle_message(websocket, message, sender))
-
-            task.add_done_callback(handle_task_result)
+            await handle_message(websocket, message)
 
     except websockets.exceptions.ConnectionClosed:
         pass

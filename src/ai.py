@@ -18,7 +18,7 @@ where param is different for each action:
 """
 
 
-async def send_data_to_openai(ai_data: AIInput) -> str:
+async def send_data_to_openai(system_prompt: str, ai_data: AIInput) -> str:
     client = OpenAI(
         # This is the default and can be omitted
         api_key=os.environ.get("OPENAI_API_KEY"),
@@ -30,7 +30,7 @@ async def send_data_to_openai(ai_data: AIInput) -> str:
             messages=[
                 {
                     "role": "system",
-                    "content": SYSTEM_PROMPT,
+                    "content": system_prompt,
                 },
                 {
                     "role": "user",
