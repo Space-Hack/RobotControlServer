@@ -15,7 +15,7 @@ async def main():
     print("🟢 WebSocket server running at ws://localhost:8765")
     
     # Start API server
-    config = uvicorn.Config(app, host="localhost", port=8000)
+    config = uvicorn.Config(app, host="0.0.0.0", port=8000)
     server = uvicorn.Server(config)
     
     # Run both servers concurrently
