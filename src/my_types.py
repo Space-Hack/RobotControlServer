@@ -1,8 +1,8 @@
 class VEXData:
-    def __init__(self, bumper_switch: bool, grabber_torque: float, arm_torque: float, infrared_distance: float, heading: float):
+    def __init__(self, bumper_switch: bool, grabber_angle: float, arm_angle: float, infrared_distance: float, heading: float):
         self.bumper_switch = bumper_switch
-        self.grabber_torque = grabber_torque
-        self.arm_torque = arm_torque
+        self.grabber_angle = grabber_angle
+        self.arm_angle = arm_angle
         self.infrared_distance = infrared_distance
         self.heading = heading
 
@@ -16,7 +16,7 @@ class AIInput:
         self.position = position
 
 
-class AIResponse:
+class ControlData:
     def __init__(self, action: str, param: float):
         self.action = action
         self.param = param

@@ -3,7 +3,7 @@ import asyncio
 import websockets
 from socketHandler import register, unregister, get_client_id
 from parser import parse_vex_data_string_to_ai_input
-from my_types import VEXData, AIInput, AIResponse
+from my_types import VEXData, AIInput, ControlData
 from ai import send_data_to_openai
 from websockets.legacy.server import WebSocketServerProtocol
 
@@ -12,7 +12,7 @@ async def handle_message(websocket: WebSocketServerProtocol, message: str, sende
     ai_input: AIInput = parse_vex_data_string_to_ai_input(
         message, sender)
 
-    ai_response: AIResponse = await send_data_to_openai(ai_input)
+    ai_response: ControlData = await send_data_to_openai(ai_input)
 
     try:
         ai_json_response = json.loads(ai_response)

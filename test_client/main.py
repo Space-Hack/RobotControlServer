@@ -4,10 +4,10 @@ import json
 
 
 class VEXData:
-    def __init__(self, bumper_switch: bool, grabber_torque: float, arm_torque: float, infrared_distance: float, heading: float):
+    def __init__(self, bumper_switch: bool, grabber_angle: float, arm_angle: float, infrared_distance: float, heading: float):
         self.bumper_switch = bumper_switch
-        self.grabber_torque = grabber_torque
-        self.arm_torque = arm_torque
+        self.grabber_angle = grabber_angle
+        self.arm_angle = arm_angle
         self.infrared_distance = infrared_distance
         self.heading = heading
 
@@ -20,8 +20,8 @@ async def test():
         # send test data to server
         test_data = VEXData(
             bumper_switch=True,
-            grabber_torque=0.5,
-            arm_torque=0.8,
+            grabber_angle=0.5,
+            arm_angle=0.8,
             infrared_distance=10.0,
             heading=90.0
         )
