@@ -12,8 +12,8 @@ load_dotenv()
 
 async def main():
     # Start WebSocket server
-    websocket_server = websockets.serve(handle_client, "localhost", 8765)
-    print("🟢 WebSocket server running at ws://localhost:8765")
+    websocket_server = websockets.serve(handle_client, "0.0.0.0", 8765)
+    print("🟢 WebSocket server running at ws://0.0.0.0:8765")
     
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     CERT_PATH = os.path.join(BASE_DIR, "certs", "cert.pem")
