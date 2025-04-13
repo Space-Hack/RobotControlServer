@@ -1,6 +1,7 @@
 import asyncio
 import websockets
 import uvicorn
+import os
 
 from worker import handle_client
 from api import app
