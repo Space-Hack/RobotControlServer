@@ -11,6 +11,8 @@ class Robot:
         self.websocket = websocket
 
         self.system_prompt = None
+        self.name = None
+        self.task_objective = None
 
     def attach_task(self, name: str, task_objective: str):
         self.name = name
