@@ -12,7 +12,7 @@ As a response return ONLY a JSON object with the following fields:
 where param is different for each action:
 - FORWARD: the distance to move forward in centimeters
 - BACKWARD: the distance to move backward in centimeters
-- TURN: the angle to turn in degrees
+- TURN: the angle to turn in degrees from -180 to 180
 - GRABBER_HIGHT: the height of the grabber in centimeters
 - GRABBER_WIDTH: the width of the grabber in centimeters
 """
