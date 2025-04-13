@@ -1,6 +1,5 @@
 import json
 from my_types import VEXData, AIInput, ControlData
-from positions import get_position
 
 
 def input_to_object(input_data: str) -> VEXData:
@@ -40,10 +39,8 @@ def grabber_height_to_arm_angle(grabber_height: float) -> float:
 
 def parse_vex_data_string_to_ai_input(vex_data_string: str, client_id: str) -> AIInput:
     vexData: VEXData = input_to_object(vex_data_string)
-    position = get_position(client_id)
 
     ai_input = AIInput(
-        position=position,
         distance_to_object=vexData.infrared_distance,
         has_object=vexData.bumper_switch,
         grabber_height=arm_angle_to_grabber_height(vexData.arm_angle),

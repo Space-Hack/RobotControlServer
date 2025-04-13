@@ -8,12 +8,11 @@ class VEXData:
 
 
 class AIInput:
-    def __init__(self, has_object: bool, grabber_width: float, grabber_height: float, distance_to_object: float, position: dict):
+    def __init__(self, has_object: bool, grabber_width: float, grabber_height: float, distance_to_object: float):
         self.has_object = has_object
         self.grabber_width = grabber_width
         self.grabber_height = grabber_height
         self.distance_to_object = distance_to_object
-        self.position = position
 
 
 class ControlData:
