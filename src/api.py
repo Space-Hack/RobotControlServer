@@ -13,16 +13,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/v1/robots")
 async def root():
     return [{"id": robot.get_name()} for robot in robots if robot.get_name() is not None]
 
 
 @app.post("/v1/robots/{robot_id}/task")
-async def root(robot_id: str, task: dict):
-    robot = next((robot for robot in robots if robot.get_name() == robot_id), None)
+async def root(robot_id: str, task: str):
+    robot = next(
+        (robot for robot in robots if robot.get_name() == robot_id), None)
     if robot is None:
         return {"error": "Robot not found"}
-    
-    robot.attach_task(task["name"], task["system_prompt"])
+
+    robot.attach_task("testTask", task)
     return {"message": "Task attached successfully"}
