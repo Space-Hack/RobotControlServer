@@ -12,6 +12,10 @@ class Robot:
 
         self.system_prompt = None
 
+        # uuid to name
+        self.name = "Test"
+        self.task_objective = None
+
     def attach_task(self, name: str, task_objective: str):
         self.name = name
         self.system_prompt = f"""
