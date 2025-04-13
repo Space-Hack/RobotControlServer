@@ -22,19 +22,55 @@ def input_to_object(input_data: str) -> VEXData:
 
 
 def grabber_angle_to_grabber_width(grabber_angle: float) -> float:
-    return (grabber_angle / 180) * 100
+    # Mapping grabber angle [0, 30] to grabber width [9, 0]
+    grabber_angle_min = 0
+    grabber_angle_max = 30
+    grabber_width_min = 9
+    grabber_width_max = 0
+
+    # Linear transformation
+    grabber_width = ((grabber_angle - grabber_angle_min) / (grabber_angle_max -
+                     grabber_angle_min)) * (grabber_width_max - grabber_width_min) + grabber_width_min
+    return grabber_width
 
 
 def grabber_width_to_grabber_angle(grabber_width: float) -> float:
-    return (grabber_width / 100) * 180
+    # Inverse of the grabber angle to grabber width mapping
+    grabber_angle_min = 0
+    grabber_angle_max = 30
+    grabber_width_min = 9
+    grabber_width_max = 0
+
+    # Inverse linear transformation
+    grabber_angle = ((grabber_width - grabber_width_min) / (grabber_width_max -
+                     grabber_width_min)) * (grabber_angle_max - grabber_angle_min) + grabber_angle_min
+    return grabber_angle
 
 
-def arm_angle_to_grabber_height(grabber_angle: float) -> float:
-    return (grabber_angle / 180) * 50
+def arm_angle_to_grabber_height(arm_angle: float) -> float:
+    # Mapping arm angle [-200, 100] to grabber height [33, 8]
+    arm_angle_min = -200
+    arm_angle_max = 100
+    grabber_height_min = 33
+    grabber_height_max = 8
+
+    # Linear transformation
+    grabber_height = ((arm_angle - arm_angle_min) / (arm_angle_max - arm_angle_min)
+                      ) * (grabber_height_max - grabber_height_min) + grabber_height_min
+    return grabber_height
 
 
 def grabber_height_to_arm_angle(grabber_height: float) -> float:
-    return (grabber_height / 50) * 180
+    # Inverse of the previous mapping
+    arm_angle_min = -200
+    arm_angle_max = 100
+    grabber_height_min = 33
+    grabber_height_max = 8
+
+    # Inverse linear transformation
+    arm_angle = ((grabber_height - grabber_height_min) / (grabber_height_max -
+                 grabber_height_min)) * (arm_angle_max - arm_angle_min) + arm_angle_min
+    return arm_angle
 
 
 def parse_vex_data_string_to_ai_input(vex_data_string: str) -> AIInput:
