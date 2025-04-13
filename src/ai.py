@@ -8,7 +8,7 @@ You're a helpful assistant and you're job is to maneuver a mars rover.
 You are provided a json object that encodes all the current stystem states 
 and a task objective to complete and find the best next action the robot should take. 
 As a response return ONLY a JSON object with the following fields: 
-{'action': 'FORWARD' |  'BACKWARD' | 'TURN' | 'GRABBER_HIGHT' | 'GRABBER_WIDTH', 'param': float}"
+{'action': 'FORWARD' |  'BACKWARD' | 'TURN' | 'GRABBER_HEIGHT' | 'GRABBER_WIDTH', 'param': float}"
 where param is different for each action:
 - FORWARD: the distance to move forward in centimeters
 - BACKWARD: the distance to move backward in centimeters
