@@ -6,14 +6,12 @@ from typing import Dict
 from websockets.legacy.server import WebSocketServerProtocol
 
 
-
-
 class Robot:
     def __init__(self, websocket: WebSocketServerProtocol):
         self.websocket = websocket
 
         self.system_prompt = None
-    
+
     def attach_task(self, name: str, task_objective: str):
         self.name = name
         self.system_prompt = f"""
@@ -30,18 +28,18 @@ where param is different for each action:
 - GRABBER_HIGHT: the height of the grabber in centimeters
 - GRABBER_WIDTH: the width of the grabber in centimeters
 """
-    
+
     def get_name(self) -> str:
         return self.name
-    
+
     def get_system_prompt(self) -> str:
         return self.system_prompt
-    
+
     def get_websocket(self) -> WebSocketServerProtocol:
         return self.websocket
 
 
-robots: [Robot] = []
+robots = []
 
 
 async def register(websocket):
@@ -49,6 +47,5 @@ async def register(websocket):
 
 
 async def unregister(websocket):
-    robots.remove(next((robot for robot in robots if robot.get_websocket() == websocket), None))
-
-
+    robots.remove(
+        next((robot for robot in robots if robot.get_websocket() == websocket), None))
